@@ -1,21 +1,38 @@
 version: '3.1'
 
+networks:
+    inception:
+
 volumes:
   wp_data:
+  mariadb_data:
 services:
   nginx:
     build: ./requirements/nginx
+    env_file: .env
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - ./requirements/nginx/nginx.conf:/etc/conf.d/default.conf
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    restart: always
   wordpress:
     build: ./requirements/wordpress
+    env_file: .env
+    depends_on:
+      - mariadb
     volumes:
       - wp_data:/var/www/html
-    environment:
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=sbars
-      - WORDPRESS_DB_PASSWORD=password123
-      - WORDPRESS_DB_NAME=wordpress
+    networks:
+      - inception
+    restart: always
+  mariadb:
+    build: ./requirements/mariadb
+    env_file: .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+    # restart: always
