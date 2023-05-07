@@ -25,6 +25,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+
+RUN set -eux; \
+	apt-get update; \
+	apt-get install -y gosu; \
+	rm -rf /var/lib/apt/lists/*; \
+# verify that the binary works
+	gosu nobody true
+
 # Set up environment variables
 ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 ENV MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -32,12 +40,12 @@ ENV MYSQL_USER=${MYSQL_USER}
 ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
 # Copy the custom configuration file
-COPY my.cnf /etc/mysql/my.cnf
+COPY /conf/my.cnf /etc/mysql/my.cnf
 
 # Expose the MariaDB port
 EXPOSE 3306
 
 # Set up the entrypoint script
-COPY entrypoint.sh /entrypoint.sh
+COPY tools/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
