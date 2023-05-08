@@ -2,7 +2,8 @@ FROM debian:buster
 
 RUN apt-get update && apt-get install -y nginx
 
-COPY nginx.conf /etc/nginx/conf.d/http.conf
+COPY conf/nginx.conf /etc/nginx/conf.d/http.conf
+COPY conf/wordpress.conf /etc/nginx/
 COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
 COPY ssl/key.pem /etc/nginx/ssl/key.pem
 COPY index.html /usr/share/nginx/html/

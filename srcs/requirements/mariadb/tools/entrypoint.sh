@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# wait
+
 # Change ownership of the /var/lib/mysql directory
 chown -R mysql:mysql /var/lib/mysql
 
@@ -12,7 +14,7 @@ fi
 # Start MariaDB in the foreground as the 'mysql' user
 echo "Starting MariaDB in the foreground as the 'mysql' user..."
 gosu mysql mysqld --skip-networking &
-MYSQL_PID=$!
+# MYSQL_PID=$!
 
 # Wait for MariaDB to start
 echo "Waiting for MariaDB to start..."
@@ -28,4 +30,4 @@ mysql -e "FLUSH PRIVILEGES;"
 
 # Keep the MariaDB server running in the foreground
 echo "Keeping MariaDB running..."
-wait $MYSQL_PID
+# wait $MYSQL_PID
