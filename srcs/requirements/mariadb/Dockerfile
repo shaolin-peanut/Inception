@@ -33,12 +33,6 @@ RUN set -eux; \
 # verify that the binary works
 	gosu nobody true
 
-# Set up environment variables
-ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-ENV MYSQL_DATABASE=${MYSQL_DATABASE}
-ENV MYSQL_USER=${MYSQL_USER}
-ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
-
 # Copy the custom configuration file
 COPY /conf/my.cnf /etc/mysql/my.cnf
 
@@ -46,6 +40,6 @@ COPY /conf/my.cnf /etc/mysql/my.cnf
 EXPOSE 3306
 
 # Set up the entrypoint script
-COPY tools/entrypoint.sh /entrypoint.sh
+COPY tools/kickstart.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
