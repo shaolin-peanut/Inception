@@ -8,6 +8,8 @@ I use the script in [Theo's repo](https://github.com/t-h2o/inception) to set up 
 - `ip addr` find ip address of enp something device
 - from machine you want to connect from, write `ssh username@ipyoufound`
 - if you want to map some ports, do it like this `ssh usernameifyoufound -L 8080:localhost:80` to map port 8080 on the vm to localhost 80 on the host machine.
+- Port mapping I use now (first ssh connection, then ssh normally if you want to have more terminals attached). The 9000 ports don't work yet, they're supposed to serve wordpress
+  - ` ssh -L 8080:localhost:8080 -L 9000:localhost:9000 -L 8443:localhost:443 user@ip` 
 
 ## .env template
 ```
