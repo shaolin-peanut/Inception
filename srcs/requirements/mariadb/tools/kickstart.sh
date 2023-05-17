@@ -10,10 +10,8 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 chown -R mysql:mysql /var/lib/mysql
 
-# START MYSQL
-# /usr/bin/mysqld_safe &
+# start mariadb
 mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
-# mysqld --user=mysql
 
 # wait for mariadb to start
 until mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} ping >/dev/null 2>&1; do
@@ -22,19 +20,17 @@ done
 
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}');"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;"
+# mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "DELETE FROM mysql.user WHERE user != 'root' AND user != 'mariadb.sys' OR (user = 'root' AND host != 'localhost');"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "DELETE FROM mysql.user WHERE user != 'root' AND user != 'mariadb.sys' OR (user = 'root' AND host != 'localhost');"
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
+
+# create, user and grant priv
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SET @@GLOBAL.sql_mode='';"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SELECT COUNT(*) FROM mysql.user WHERE user='${MYSQL_USER}';" | grep -q 1 || mysql -uroot -p${MYSQL_ROOT_PASSWORD} -vvv -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED by '${MYSQL_PASSWORD}';"
+# mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SELECT COUNT(*) FROM mysql.user WHERE user='${MYSQL_USER}';" | grep -q 1 || mysql -uroot -p${MYSQL_ROOT_PASSWORD} -vvv -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED by '${MYSQL_PASSWORD}';"
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS 'sbars'@'%' IDENTIFIED BY 'sbars123';"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES";
-
-
-#mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
-#mysql -u root -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-#mysql -u root -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
-#mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;"
-#mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
-#mysql -u root -e "FLUSH PRIVILEGES;"
 
 # kill process
 mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
