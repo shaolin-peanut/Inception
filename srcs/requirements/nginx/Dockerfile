@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update && apt-get install -y nginx curl
 
 COPY conf/nginx.conf /etc/nginx/conf.d/http.conf
 COPY conf/wordpress.conf /etc/nginx/
