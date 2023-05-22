@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt-get update -y && apt-get install -y software-properties-common ca-certificates lsb-release apt-transport-https wget curl gnupg
+RUN apt-get update -y && apt-get install -y software-properties-common ca-certificates lsb-release apt-transport-https wget curl gnupg vim
 RUN sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' 
 
 RUN wget -qO - https://packages.sury.org/php/apt.gpg | apt-key add - 

@@ -15,6 +15,8 @@ define('DB_HOST', getenv('WP_DB_HOST'));
 // define('LOGGED_IN_SALT',   getenv('LOGGED_IN_SALT'));
 // define('NONCE_SALT',       getenv('NONCE_SALT'));
 
+define('WP_DEBUG', true);
+
 $table_prefix  = 'wp_';
 
 if ( ! defined( 'ABSPATH' ) ) {
