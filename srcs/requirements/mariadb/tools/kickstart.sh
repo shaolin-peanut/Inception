@@ -28,9 +28,9 @@ mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SET @@GLOBAL.sql_mode='';"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
 # mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SELECT COUNT(*) FROM mysql.user WHERE user='${MYSQL_USER}';" | grep -q 1 || mysql -uroot -p${MYSQL_ROOT_PASSWORD} -vvv -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED by '${MYSQL_PASSWORD}';"
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS 'sbars'@'%' IDENTIFIED BY 'sbars123';"
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
-mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES";
+mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;";
 
 # kill process
 mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
