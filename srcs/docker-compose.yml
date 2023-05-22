@@ -40,4 +40,4 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    # restart: always
+    restart: always
