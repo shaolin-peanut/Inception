@@ -27,8 +27,8 @@ services:
       - wp_data:/var/www/html
     networks:
       - inception
-    ports:
-      - 9000:9000
+    expose:
+      - "9000"
     restart: always
   mariadb:
     build: ./requirements/mariadb
