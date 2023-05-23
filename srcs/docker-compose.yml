@@ -5,16 +5,28 @@ networks:
 
 volumes:
   wp_data:
+    driver: local # ici nous stockons le volume en local
+    driver_opts:
+    type: 'none' 									# aucun type spécifique
+    o: 'bind'
+    device: '/Users/login/data/wordpress' 		#Ou stocker le dossier sur votre ordinateur en local
   mariadb_data:
+    driver: local
+    driver_opts:
+    type: 'none' 
+    o: 'bind'										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
+    device: '/Users/login/data/mariadb'			#Ou stocker le dossier sur votre ordinateur en local
+
 services:
   nginx:
     build: ./requirements/nginx
     env_file: .env
     ports:
-      - 8080:80
       - 443:443
     networks:
       - inception
+    volumes:
+      - wp_data:/var/www/wordpress
     depends_on:
       - wordpress
     restart: always
@@ -33,8 +45,10 @@ services:
   mariadb:
     build: ./requirements/mariadb
     env_file: .env
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
+    # ports:
+    #   - "3306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
