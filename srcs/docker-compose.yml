@@ -1,8 +1,8 @@
 version: '3.1'
 
 networks:
-    inception:
-      driver: bridge
+  inception:
+    driver: bridge
 
 volumes:
   wp_data:
