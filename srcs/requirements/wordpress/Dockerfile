@@ -11,7 +11,7 @@ RUN apt-get install -y php8.2-fpm
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
 RUN	chown -R root:root /var/www/wordpress
-COPY conf/wp-config.php /usr/share/wordpress/wp-config.php
+COPY conf/wp-config.php /var/www/wordpress/wp-config.php
 
 RUN mkdir /run/php
 RUN sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = wordpress:9000/' /etc/php/8.2/fpm/pool.d/www.conf
