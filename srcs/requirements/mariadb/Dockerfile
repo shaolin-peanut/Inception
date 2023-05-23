@@ -20,7 +20,8 @@
 FROM debian:10
 
 # Install MariaDB and dependencies
-RUN apt-get update && \
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install -y mariadb-server mariadb-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

@@ -1,4 +1,5 @@
 <?php
+
 echo 'WP_DB_NAME: ' . getenv('WP_DB_NAME') . "\n";
 define('DB_NAME', getenv('WP_DB_NAME'));
 
