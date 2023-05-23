@@ -12,4 +12,6 @@ RUN sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/' /etc/php/8.2/
 RUN apt-get install -y wordpress
 COPY conf/wp-config.php /usr/share/wordpress/wp-config.php
 
+EXPOSE 3306
+
 CMD ["php-fpm8.2", "-F"]
