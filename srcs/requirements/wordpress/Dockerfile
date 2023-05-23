@@ -11,8 +11,9 @@ RUN apt-get install -y php8.2-fpm
 # RUN apt-get install -y wordpress
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
-RUN chmod -R 755 /var/www/wordpress
-RUN	chown -R root:root /var/www/wordpress
+RUN chmod -R 755 /var/www/
+RUN	chown -R root:root /var/www/
+RUN chown -R www-data:www-data /var/www/wordpress
 COPY conf/wp-config.php /var/www/wordpress/wp-config.php
 
 RUN mkdir /run/php

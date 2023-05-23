@@ -3,7 +3,7 @@ FROM debian:buster
 RUN apt-get update && apt-get install -y nginx curl
 
 
-RUN chmod 755 /var/www/
+RUN chmod -R 755 /var/www/
 RUN chown -R www-data:www-data /var/www/
 COPY conf/unified.conf /etc/nginx/nginx.conf
 COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
