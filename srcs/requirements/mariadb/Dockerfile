@@ -27,10 +27,13 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the custom configuration file
+RUN rm -f /etc/my.cnf.d/mariadb-server.cnf
 COPY /conf/my.cnf /etc/mysql/my.cnf
 
 # Expose the MariaDB port
-EXPOSE 3306
+# EXPOSE 3306
+
+RUN chown -R mysql:mysql /var/lib/mysql
 
 # Set up the entrypoint script
 COPY tools/kickstart.sh /entrypoint.sh
