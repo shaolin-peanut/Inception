@@ -7,7 +7,6 @@ RUN wget -qO - https://packages.sury.org/php/apt.gpg | apt-key add -
 RUN apt-get update -y && apt-get install -y php8.2 && php -v
 RUN apt-get install -y php8.2-fpm
 
-
 # RUN apt-get install -y wordpress
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz

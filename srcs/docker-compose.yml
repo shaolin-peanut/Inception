@@ -6,17 +6,17 @@ networks:
 
 volumes:
   wp_data:
-    driver: local # ici nous stockons le volume en local
+    driver: local
     driver_opts:
-      type: 'none' 									# aucun type spécifique
+      type: 'none'
       o: 'bind'
-      device: '/Users/sbars/data/wordpress' 		#Ou stocker le dossier sur votre ordinateur en local
+      device: '/Users/sbars/data/wordpress'
   mariadb_data:
     driver: local
     driver_opts:
       type: 'none'
-      o: 'bind'										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
-      device: '/Users/sbars/data/mariadb'			#Ou stocker le dossier sur votre ordinateur en local
+      o: 'bind'
+      device: '/Users/sbars/data/mariadb'
 
 services:
   nginx:
