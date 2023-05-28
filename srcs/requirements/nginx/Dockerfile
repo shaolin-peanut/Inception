@@ -27,10 +27,10 @@ COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
 COPY ssl/key.pem /etc/nginx/ssl/key.pem
 
 #RUN chown -R www-data:www-data /var/www/html
-RUN chmod 755 /var/www/wordpress
-RUN chmod 644 /var/www/wordpress/*
-#RUN chown -R www-data:www-data /var/log/nginx
-RUN chmod 644 /var/log/nginx/*
+# RUN chmod 755 /var/www/wordpress
+# RUN chmod 644 /var/www/wordpress/*
+# RUN chown -R www-data:www-data /var/log/nginx
+# RUN chmod 644 /var/log/nginx/*
 
 EXPOSE 443
 
