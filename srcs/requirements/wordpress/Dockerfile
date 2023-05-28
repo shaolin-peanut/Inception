@@ -22,6 +22,7 @@ RUN apk update && \
     ln -s /usr/bin/php8 /usr/bin/php
 
 COPY ./conf/script.sh /script.sh
+COPY ./conf/wp-config.php /home/sbars
 RUN chmod +x /script.sh
 
 CMD ["sh", "/script.sh"]
