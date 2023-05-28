@@ -35,7 +35,7 @@ wp plugin install redis-cache --activate --allow-root
 wp plugin update --all --allow-root
 sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php8/php-fpm.d/www.conf
 mkdir /run/php
-wp redis enable --allow-root
+# wp redis enable --allow-root
 
 fi
 
