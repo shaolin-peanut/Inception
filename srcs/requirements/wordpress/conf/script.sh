@@ -31,11 +31,9 @@ EOF
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
 wp theme install astra --activate --allow-root
-wp plugin install redis-cache --activate --allow-root
 wp plugin update --all --allow-root
 sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php8/php-fpm.d/www.conf
 mkdir /run/php
-# wp redis enable --allow-root
 
 fi
 
