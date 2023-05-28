@@ -19,15 +19,24 @@ mv wp-cli.phar /usr/local/bin/wp
 
 wp core download --allow-root
 rm /var/www/wordpress/wp-config-sample.php
+
+# Execute wp config create command
 wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb
+
+# Check the exit status of the previous command
+if [[ $? -ne 0 ]]; then
+  echo "wp config create command failed. Copying wp-config.php manually..."
+  cp /home/sbars/wp-config.php /var/www/wordpress/wp-config.php
+fi
+
 
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
 wp theme install astra --activate --allow-root
 wp plugin update --all --allow-root
-# sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php8/php-fpm.d/www.conf
-sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/' /etc/php/8.2/fpm/pool.d/www.conf
-sed -i 's/;clear_env = no/clear_env = no/' /etc/php/8.2/fpm/pool.d/www.conf
+sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php8/php-fpm.d/www.conf
+# sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/' /etc/php/8.2/fpm/pool.d/www.conf
+# sed -i 's/;clear_env = no/clear_env = no/' /etc/php/8.2/fpm/pool.d/www.conf
 mkdir /run/php
 
 fi
