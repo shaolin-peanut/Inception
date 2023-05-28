@@ -36,7 +36,7 @@ mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;";
 mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
 
 # start MariaDB again, in the background
-mysqld_safe --datadir=/var/lib/mysql --user=mysql &
+mysqld_safe --datadir=/usr --user=mysql &
 
 # restart (so that root pswd is integrated)
 # exec /usr/bin/mysqld_safe
