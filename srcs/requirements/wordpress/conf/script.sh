@@ -21,7 +21,7 @@ mv wp-cli.phar /usr/local/bin/wp
 # https://developer.wordpress.org/cli/commands/core/
 wp core download --allow-root
 rm /var/www/wordpress/wp-config-sample.php
-wp config create \
+sudo wp config create \
     --dbname=$MYSQL_DATABASE \
     --dbuser=$MYSQL_USER \
     --dbpass=$MYSQL_PASSWORD \
