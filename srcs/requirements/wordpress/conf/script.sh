@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+# set -e
 set -x
 
 mkdir -p /var/www/wordpress
