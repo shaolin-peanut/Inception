@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+set -x
 
 mkdir -p /var/www/wordpress
 cd /var/www/wordpress
