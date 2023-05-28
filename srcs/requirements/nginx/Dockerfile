@@ -26,9 +26,11 @@ COPY conf/unified.conf /etc/nginx/nginx.conf
 COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
 COPY ssl/key.pem /etc/nginx/ssl/key.pem
 
-RUN chown -R www-data:www-data *
-RUN chmod 755 {dir}
-RUN chmod 644 {files}
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod 755 /var/www/html
+RUN chmod 644 /var/www/html/*
+RUN chown -R www-data:www-data /var/log/nginx
+RUN chmod 644 /var/log/nginx/*
 
 EXPOSE 443
 
