@@ -9,7 +9,6 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --ldata=/var/lib/mysql
 fi
 chown -R mysql:mysql /var/lib/mysql
-chown -R mysql:mysql /run/mysqld
 
 # start mariadb
 mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
