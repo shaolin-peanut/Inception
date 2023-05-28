@@ -21,7 +21,7 @@ RUN apk update && \
     rm -rf /var/cache/apk/* && \
     ln -s /usr/bin/php8 /usr/bin/php
 
-COPY ./tools/script.sh /script.sh
+COPY ./conf/script.sh /script.sh
 RUN chmod +x /script.sh
 
 CMD ["sh", "/script.sh"]
