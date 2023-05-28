@@ -28,7 +28,7 @@ RUN apt-get update -y && \
 
 # Copy the custom configuration file
 RUN rm -f /var/lib/mysql/my.cnf
-RUN rm -f /etc/mysql/my.cnf.d/mariadb-server.cnf
+# RUN rm -f /etc/mysql/my.cnf.d/mariadb-server.cnf
 COPY /conf/my.cnf /etc/mysql/my.cnf
 
 # Expose the MariaDB port
