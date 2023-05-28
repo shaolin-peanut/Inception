@@ -2,17 +2,17 @@ version: '3.8'
 
 volumes:
   wp_data:
-    driver: /Users/sbars/data/wordpress
+    driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/sbars/data/wordpress'
+      device: '/home/sbars/data/wordpress'
   mariadb_data:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/sbars/data/mariadb'
+      device: '/home/sbars/data/mariadb'
 
 networks:
   inception:
