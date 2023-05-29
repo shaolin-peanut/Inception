@@ -1,16 +1,5 @@
 <?php
 
-define( 'DB_NAME', 'wp_mariadb' );
-
-/** Database username */
-define( 'DB_USER', 'elix' );
-
-/** Database password */
-define( 'DB_PASSWORD', 'mariaelix' );
-
-/** Database hostname */
-define( 'DB_HOST', 'mariadb' );
-
 echo 'WP_DB_NAME: ' . getenv('WP_DB_NAME') . "\n";
 define('DB_NAME', getenv('WP_DB_NAME'));
 
