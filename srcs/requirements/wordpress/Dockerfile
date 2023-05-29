@@ -1,33 +1,20 @@
-FROM alpine:3.15
+FROM	alpine:3.16.3
 
-RUN apk update && \
-    apk add --no-cache \
-    php8 \
-    php8-phar \
-    php8-fpm \
-    php8-mysqli \
-    php8-json \
-    php8-curl \
-    php8-dom \
-    php8-xml \
-    php8-iconv \
-    php8-xmlreader \
-    php8-xmlwriter \
-    php8-tokenizer \
-    php8-simplexml \
-    mariadb-client \
-    netcat-openbsd \
-    curl && \
-    rm -rf /var/cache/apk/* && \
-    ln -s /usr/bin/php8 /usr/bin/php
+RUN		apk update && apk upgrade && \
+		apk add php8 php8-fpm php8-opcache php8-gd php8-curl php8-mysqli php8-json mariadb-client php-phar php8-mbstring
 
-RUN mkdir -p /var/www/wordpress && \
-    cd /var/www/wordpress && \
-    rm -rf *
+RUN		mkdir /var/www && \
+		wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
+		cd /var/www && \
+		tar -xzf wordpress-6.0-fr_FR.tar.gz && \
+		rm wordpress-6.0-fr_FR.tar.gz && \
+		chown -R root:root /var/www/wordpress
 
-COPY ./conf/script.sh /script.sh
-# COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
-# RUN chmod 777 /var/www/wordpress/wp-config.php
-RUN chmod +x /script.sh
+COPY	conf/entrypoint.sh /entrypoint.sh
 
-CMD ["sh", "/script.sh"]
+COPY	conf/www.conf /etc/php8/php-fpm.d
+
+RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+
+ENTRYPOINT	["sh", "entrypoint.sh"]
