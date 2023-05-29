@@ -19,11 +19,10 @@ mv wp-cli.phar /usr/local/bin/wp
 
 wp core download --allow-root
 rm /var/www/wordpress/wp-config-sample.php
-rm /var/www/wordpress/wp-config.php
 
 # Execute wp config create command
 # wp config create --debug --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb
-mv /home/sbars/wp-config.php /var/www/wordpress
+# mv /home/sbars/wp-config.php /var/www/wordpress
 
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
