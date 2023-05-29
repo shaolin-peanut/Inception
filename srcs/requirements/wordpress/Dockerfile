@@ -26,8 +26,8 @@ RUN mkdir -p /var/www/wordpress && \
     rm -rf *
 
 COPY ./conf/script.sh /script.sh
-COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
-RUN chmod 777 /var/www/wordpress/wp-config.php
+# COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
+# RUN chmod 777 /var/www/wordpress/wp-config.php
 RUN chmod +x /script.sh
 
 CMD ["sh", "/script.sh"]
