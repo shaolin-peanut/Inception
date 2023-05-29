@@ -21,6 +21,10 @@ RUN apk update && \
     rm -rf /var/cache/apk/* && \
     ln -s /usr/bin/php8 /usr/bin/php
 
+RUN mkdir -p /var/www/wordpress && \
+    cd /var/www/wordpress && \
+    rm -rf *
+
 COPY ./conf/script.sh /script.sh
 COPY ./conf/wp-config.php /var/www/wordpress
 RUN chmod +x /script.sh

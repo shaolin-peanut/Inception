@@ -2,10 +2,6 @@
 # set -e
 set -x
 
-mkdir -p /var/www/wordpress
-cd /var/www/wordpress
-rm -rf *
-
 until nc -z mariadb 3306; do
   echo "Waiting for MariaDB to start..."
   sleep 1
