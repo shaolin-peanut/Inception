@@ -9,8 +9,8 @@ php-mysql \
 mariadb-client
 
 # change params
-RUN sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = wordpress:9000/' /etc/php/7.3/fpm/pool.d/www.conf
-RUN sed -i 's/;clear_env = no/clear_env = no/' /etc/php/7.3/fpm/pool.d/www.conf
+# RUN sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = wordpress:9000/' /etc/php/7.3/fpm/pool.d/www.conf
+# RUN sed -i 's/;clear_env = no/clear_env = no/' /etc/php/7.3/fpm/pool.d/www.conf
 
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
