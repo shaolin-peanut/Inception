@@ -4,7 +4,7 @@ set -x
 echo "mariadb-server mysql-server/root_password password root123" | debconf-set-selections
 echo "mariadb-server mysql-server/root_password_again password root123" | debconf-set-selections
 
-if [ ! -d "/var/lib/mysql/mysql" ]; then
+if mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER' LIMIT 1);" | grep -q '1'; then
     mysql_install_db --user=mysql --ldata=/var/lib/mysql
 
 chown -R mysql:mysql /var/lib/mysql
@@ -34,9 +34,9 @@ mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
 fi
 
 # start MariaDB again, in the background
-mysqld_safe --datadir=/var/lib/mysql --user=mysql &
+mysqld_safe --datadir=/var/lib/mysql --user=mysql
 
 # restart (so that root pswd is integrated)
 # exec /usr/bin/mysqld_safe
 # wait
-wait
+# wait

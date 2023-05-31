@@ -12,9 +12,9 @@ if [ ! -e /var/www/wordpress/wp-config.php ]; then
         --path='/var/www/wordpress'
 
 
-sleep 2
-wp core install     --url=$DOMAIN_NAME --title="WOAH" --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
-wp user create      --allow-root --role=author $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PWD --path='/var/www/wordpress' >> /log.txt
+    sleep 2
+    wp core install     --url=$DOMAIN_NAME --title="WOAH" --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
+    wp user create      --allow-root --role=author $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PWD --path='/var/www/wordpress' >> /log.txt
 fi
 	
 
