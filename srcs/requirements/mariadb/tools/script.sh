@@ -8,7 +8,7 @@ chown -R mysql:mysql /var/lib/mysql
 chmod 644 /var/lib/mysql
 
 # start mariadb
-mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
+mysqld_safe --datadir=/var/lib/mysql --user=mysql &
 
 if mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$MYSQL_USER' LIMIT 1);" | grep -q '1'; then
 
@@ -35,9 +35,9 @@ mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
 fi
 
 # start MariaDB again, in the background
-mysqld_safe --datadir=/var/lib/mysql --user=mysql
+mysqld_safe --datadir=/var/lib/mysql --user=mysql &
 
 # restart (so that root pswd is integrated)
 # exec /usr/bin/mysqld_safe
 # wait
-# wait
+wait
