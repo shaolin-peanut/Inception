@@ -5,7 +5,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --ldata=/var/lib/mysql
 fi
 
-if [ -f /var/www/wordpress/wp-config.php ]; then
+if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
 # start mariadb
 mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
@@ -14,7 +14,7 @@ mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
 # until mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} ping >/dev/null 2>&1; do
 #     sleep 1
 # done
-until mysqladmin -u mysql ping >/dev/null 2>&1; do
+until mysqladmin -u root -p'' ping >/dev/null 2>&1; do
     sleep 1
 done
 
