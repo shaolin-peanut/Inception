@@ -4,7 +4,6 @@ set -x
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --ldata=/var/lib/mysql
 fi
-# chmod 644 /var/lib/mysql
 
 if [ -f /var/www/wordpress/wp-config.php ]; then
 
@@ -29,7 +28,7 @@ done
     # FLUSH PRIVILEGES;
 
 # mysql -u root -p${MYSQL_ROOT_PASSWORD} <<- EOF
-mysql -u mysql <<- EOF
+mysql -u root <<- EOF
     CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
     CREATE USER IF NOT EXISTS ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
     GRANT ALL PRIVILEGES ON ${MSYQL_DATABASE}.* TO ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
