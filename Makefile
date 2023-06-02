@@ -1,33 +1,20 @@
-all :
-	mkdir -p $(HOME)/data/wordpress
-	mkdir -p $(HOME)/data/mariadb
+all:
+	sudo mkdir -p /Users/$(HOME)/data/wordpress
+	sudo mkdir -p /Users/$(HOME)/data/mariadb
 	make up
 
-up :
-	docker-compose -f ./srcs/docker-compose.yml up -d
+up:
+	docker compose -f srcs/docker-compose.yml up --detach --build
 
-build :
-	docker-compose -f ./srcs/docker-compose.yml -d build
+down:
+	docker compose -f srcs/docker-compose.yml down
 
-stop :
-	docker-compose -f ./srcs/docker-compose.yml stop
-
-restart :
-	docker-compose -f ./srcs/docker-compose.yml restart
-
-remove :
-	docker-compose -f ./srcs/docker-compose.yml rm
-
-down :
-	docker-compose -f ./srcs/docker-compose.yml down --volumes --rmi all
-
-fclean : down
-	sudo rm -rf $(HOME)/data/wordpress
-	sudo rm -rf $(HOME)/data/mariadb
-	sudo mkdir $(HOME)/data/wordpress
-	sudo mkdir $(HOME)/data/mariadb
+fclean:
+	sudo rm -rf /Users/$(HOME)/data/wordpress
+	sudo rm -rf /Users/$(HOME)/data/mariadb
+	sudo mkdir -p /Users/$(HOME)/data/wordpress
+	sudo mkdir -p /Users/$(HOME)/data/mariadb
+	docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null
 	docker system prune -f
-
-re : fclean all
-
-.PHONY: up build stop restart remove down fclean re
+  
+re: fclean all
