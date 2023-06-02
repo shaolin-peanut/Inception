@@ -10,5 +10,5 @@ RUN chown -R mysql:mysql /var/lib/mysql
 EXPOSE 3306
 
 COPY tools/script.sh /script.sh
-RUN chmod 777 /script.sh
+RUN chmod a+x /script.sh
 ENTRYPOINT [ "sh", "/script.sh" ]

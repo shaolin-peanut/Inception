@@ -2,7 +2,7 @@
 set -x
 
 sleep 10
-cat /var/www/wordpress/wp-config.php
+# cat /var/www/wordpress/wp-config.php
 if [ ! -e /var/www/wordpress/wp-config.php ]; then
     wp config create --allow-root \
         --dbname=$MYSQL_DATABASE \
