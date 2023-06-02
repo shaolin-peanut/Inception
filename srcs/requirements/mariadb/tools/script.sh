@@ -14,7 +14,7 @@ mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
 # until mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} ping >/dev/null 2>&1; do
 #     sleep 1
 # done
-until mysqladmin -u root -p'' ping >/dev/null 2>&1; do
+until mysqladmin -u root --password='' ping >/dev/null 2>&1; do
     sleep 1
 done
 
