@@ -19,22 +19,24 @@ until mysqladmin -u mysql ping >/dev/null 2>&1; do
 done
 
 # mysqladmin -u root password '${MYSQL_ROOT_PASSWORD}'
-    # SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}');
-    # GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;
-    # DELETE FROM mysql.user WHERE user != 'root' AND user != 'mariadb.sys' OR (user = 'root' AND host != 'localhost');
-    # CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-    # CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    # GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'%';
-    # FLUSH PRIVILEGES;
+
 
 # mysql -u root -p${MYSQL_ROOT_PASSWORD} <<- EOF
-mysql -u root -p${MYSQL_ROOT_PASSWORD} <<- EOF
+mysql -u root -p'' <<- EOF
+    SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${MYSQL_ROOT_PASSWORD}');
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;
+    DELETE FROM mysql.user WHERE user != 'root' AND user != 'mariadb.sys' OR (user = 'root' AND host != 'localhost');
     CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-    CREATE USER IF NOT EXISTS ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    GRANT ALL PRIVILEGES ON ${MSYQL_DATABASE}.* TO ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+    CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+    GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'%';
     FLUSH PRIVILEGES;
 EOF
+
+    # CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
+    # CREATE USER IF NOT EXISTS ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+    # GRANT ALL PRIVILEGES ON ${MSYQL_DATABASE}.* TO ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+    # ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+    # FLUSH PRIVILEGES;
 
     # kill process
 mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
