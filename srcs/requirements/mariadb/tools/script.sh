@@ -7,7 +7,8 @@ fi
 chown -R mysql:mysql /var/lib/mysql
 # chmod 644 /var/lib/mysql
 
-if if [ -f /var/www/wordpress/wp-config.php ]; then
+if [ -f /var/www/wordpress/wp-config.php ]; then
+
 # start mariadb
 mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
 
