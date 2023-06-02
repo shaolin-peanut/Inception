@@ -1,32 +1,22 @@
-# FROM debian:buster
+FROM debian:buster
 
-# RUN apt-get update && apt-get install -y nginx curl
+# install nginx and utils
+RUN apt update -y && apt upgrade -y && apt install nginx vim curl -y
 
+# ssl setup
+RUN apt install openssl -y && apt upgrade -y
+RUN chmod 755 /etc/ssl && chmod 755 /etc/ssl/certs && chmod 755 /etc/ssl/private
+RUN openssl req -newkey rsa:4096 -days 42 -nodes -x509 \
+-out /etc/ssl/certs/inception.crt \
+-keyout /etc/ssl/private/inception.key \
+-subj "/C=CH/ST=IDF/L=Lausanne/O=42/OU=42/CN=sbars.42.fr/UID=sbars"
 
-# RUN chmod -R 755 /var/www/
-# RUN chown -R www-data:www-data /var/www/
-# COPY conf/unified.conf /etc/nginx/nginx.conf
-# COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
-# COPY ssl/key.pem /etc/nginx/ssl/key.pem
+# nginx conf (the -p of mkdir creates all the parent folders missing, at once)
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# CMD ["nginx", "-g", "daemon off;"]
+# rights allocation
+RUN chmod 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
-FROM alpine:3.15
-
-ARG DOMAIN_NAME
-
-RUN apk update && \
-    apk add --no-cache \
-        nginx \
-        openssl \
-        curl \
-    && rm -rf /var/cache/apk/*
-
-COPY conf/unified.conf /etc/nginx/nginx.conf
-COPY ssl/cert.pem /etc/nginx/ssl/cert.pem
-COPY ssl/key.pem /etc/nginx/ssl/key.pem
-
-EXPOSE 443
-
-# start nginx ("-g" to pass the command "deamon off;" to nginx be run in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# run nginx in daemon
+CMD [ "nginx", "-g", "daemon off;"]
