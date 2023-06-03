@@ -1,9 +1,11 @@
 #!bin/bash
 set -x
 
-while ! mysqladmin ping -h"${MYSQL_HOSTNAME}" --silent; do
-	sleep 1
-done
+# while ! mysqladmin ping -h"${MYSQL_HOSTNAME}" --silent; do
+# 	sleep 1
+# done
+
+sleep 10
 
 if [ ! -f "/wordpress/wp-activate.php" ]; then
     rm -rf /var/www/wordpress/*
