@@ -9,7 +9,7 @@ RUN chmod 755 /etc/ssl && chmod 755 /etc/ssl/certs && chmod 755 /etc/ssl/private
 RUN openssl req -newkey rsa:4096 -days 42 -nodes -x509 \
 -out /etc/ssl/certs/inception.crt \
 -keyout /etc/ssl/private/inception.key \
--subj "/C=CH/ST=IDF/L=Lausanne/O=42/OU=42/CN=sbars.42.fr/UID=sbars"
+-subj "/C=CH/ST=IDF/L=Lausanne/O=42/OU=42/CN=${DOMAIN_NAME}/UID=${MYSQL_USER}"
 
 # nginx conf (the -p of mkdir creates all the parent folders missing, at once)
 COPY conf/nginx.conf /etc/nginx/nginx.conf

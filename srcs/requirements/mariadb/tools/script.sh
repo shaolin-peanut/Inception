@@ -10,10 +10,6 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 # start mariadb
 mysqld_safe --datadir=/var/lib/mysql --user=mysql --bind-address=0.0.0.0 &
 
-# wait for mariadb to start
-# until mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} ping >/dev/null 2>&1; do
-#     sleep 1
-# done
 until mysqladmin -u root --password='' ping >/dev/null 2>&1; do
     sleep 1
 done
@@ -32,21 +28,11 @@ mysql -u root --password='' <<- EOF
     FLUSH PRIVILEGES;
 EOF
 
-    # CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-    # CREATE USER IF NOT EXISTS ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    # GRANT ALL PRIVILEGES ON ${MSYQL_DATABASE}.* TO ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    # ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
-    # FLUSH PRIVILEGES;
-
-    # kill process
 mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown
 
 fi
 
 # start MariaDB again, in the background
 mysqld_safe --datadir=/var/lib/mysql --user=mysql &
-
-# restart (so that root pswd is integrated)
-# exec /usr/bin/mysqld_safe
-# wait
+# wait till last launched process dies (never if all goes okay)
 wait

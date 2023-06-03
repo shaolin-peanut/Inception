@@ -18,7 +18,7 @@ if [ ! -f "/wordpress/wp-activate.php" ]; then
     --dbname=$MYSQL_DATABASE \
     --dbuser=$MYSQL_USER \
     --dbpass=$MYSQL_PASSWORD \
-    --dbhost=mariadb:3306 \
+    --dbhost=$WP_DB_HOST:3306 \
     --path='/var/www/wordpress' \
     --extra-php \
     --allow-root
@@ -50,13 +50,3 @@ if [ ! -d /run/php ]; then
     mkdir -p /run/php
 fi
 /usr/sbin/php-fpm7.3 -F
-
-# echo "define( 'CONCATENATE_SCRIPTS', false );" >> /var/www/wordpress/wp-config.php
-# echo "define( 'SCRIPT_DEBUG', true );" >> /var/www/wordpress/wp-config.php
-# echo "define( 'WP_HOME', 'https://jcluzet.42.fr' );" >> /var/www/wordpress/wp-config.php
-# echo "define( 'WP_SITEURL', 'https://jcluzet.42.fr' );" >> /var/www/wordpress/wp-config.php
-
-# echo "define( 'WP_DEBUG', true);" >> /var/www/wordpress/wp-config.php
-# echo "define( 'WP_DEBUG_LOG', true);" >> /var/www/wordpress/wp-config.php
-# echo "define( 'WP_DEBUG_DISPLAY', false);" >> /var/www/wordpress/wp-config.php
-# echo "define('WP_ALLOW_REPAIR', true);" >> /var/www/wordpress/wp-config.php
