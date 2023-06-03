@@ -1,20 +1,45 @@
 #!bin/bash
 set -x
 
-sleep 10
-if [ ! -e /var/www/wordpress/wp-config.php ]; then
-    wp config create --allow-root \
-        --dbname=$MYSQL_DATABASE \
-        --dbuser=$MYSQL_USER \
-        --dbpass=$MYSQL_PASSWORD \
-        --dbhost=mariadb:3306 \
-        --path='/var/www/wordpress' \
-        --extra-php
+while ! mysqladmin ping -h"${MYSQL_HOSTNAME}" --silent; do
+	sleep 1
+done
+
+if [ ! -f "/wordpress/wp-activate.php" ]; then
+    rm -rf /var/www/wordpress/*
+
+    wp core download \
+    --locale="en_US" \
+    --allow-root
+
+    wp core config \
+    --dbname=$MYSQL_DATABASE \
+    --dbuser=$MYSQL_USER \
+    --dbpass=$MYSQL_PASSWORD \
+    --dbhost=mariadb:3306 \
+    --path='/var/www/wordpress' \
+    --extra-php \
+    --allow-root
+
+    chmod 777 wp-config.php
 
 
-    sleep 2
-    wp core install     --url=$DOMAIN_NAME --title="WOAH" --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
-    wp user create      --allow-root --role=author $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PWD --path='/var/www/wordpress' >> /log.txt
+    wp core install \
+    --url=$DOMAIN_NAME \
+    --title="WOAH" \
+    --admin_user=$MYSQL_USER \
+    --admin_password=$MYSQL_PASSWORD \
+    --admin_email=$WP_ADMIN_EMAIL\
+     --allow-root \
+     --path='/var/www/wordpress'
+
+    wp user create \
+    --allow-root \
+    --role=author $WP_USER $WP_USER_EMAIL \
+    --user_pass=$WP_USER_PWD \
+    --path='/var/www/wordpress' >> /log.txt
+else
+    printf "WordPress is installed, skipping installation and launching php-fpm7.3\n"
 fi
 	
 
